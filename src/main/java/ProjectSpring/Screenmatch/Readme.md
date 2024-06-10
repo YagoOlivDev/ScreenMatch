@@ -71,10 +71,10 @@ Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICEN
 
 Para dúvidas ou sugestões, entre em contato:
 
-- **Nome**: Seu Nome
+- **Nome**: Yago De Oliveira Barbosa
 - **Email**: yagodeoliveirabarbosa@gmail.com
-- **LinkedIn**: [Meu LinkedIn](https://www.linkedin.com/in/seu-usuario/)
-- **GitHub**: [Meu GitHub](https://github.com/seu-usuario)
+- **LinkedIn**: [Meu LinkedIn]([https://www.linkedin.com/in/seu-usuario/](https://www.linkedin.com/in/yago-de-oliveira-barbosa-12525b259/))
+- **GitHub**: [Meu GitHub](https://github.com/YagoOlivDev)
 
 ---
 
