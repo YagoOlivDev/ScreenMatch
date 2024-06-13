@@ -20,6 +20,8 @@ public class Episodes
     @ManyToOne
     private Serie serie;
 
+    public Episodes(){}
+
     public Episodes(Integer numberSeason, EpisodeData episodeData)
     {
 

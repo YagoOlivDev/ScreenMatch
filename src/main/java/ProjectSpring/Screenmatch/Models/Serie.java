@@ -23,7 +23,7 @@ public class Serie
     private String poster;
     private String plot;
 
-    @OneToMany(mappedBy = "serie")
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episodes> episodes = new ArrayList<>();
 
     public Serie(){}
@@ -114,6 +114,7 @@ public class Serie
 
     public void setEpisodes(List<Episodes> episodes)
     {
+        episodes.forEach(e -> e.setSerie(this));
         this.episodes = episodes;
     }
 
@@ -134,13 +135,14 @@ public class Serie
         return
 
                 "Serie{" +
-                "plot='" + this.plot + '\'' +
                 ", poster='" + poster + '\'' +
                 ", actores='" + actores + '\'' +
                 ", genre=" + genre +
                 ", assessment=" + assessment +
                 ", totalSeasons=" + totalSeasons +
                 ", title=" + title + '\'' +
+                ", plot='" + this.plot + '\'' +
+                ", Episodes='" + this.episodes + '\'' +
                 '}';
 
     }
