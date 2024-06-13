@@ -48,7 +48,7 @@ O Screenmatch é uma aplicação que oferece uma interface amigável para os usu
 
 1. **Clone o repositório**:
    ```bash
-   git clone https://github.com/seu-usuario/screenmatch.git
+   git clone https://github.com/YagoOlivDev/ScreenMatch.git
    cd screenmatch
    ```
 
