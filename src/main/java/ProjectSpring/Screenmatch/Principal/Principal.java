@@ -19,7 +19,8 @@ public class Principal {
     private Convertsdata convertsdata = new Convertsdata();
     private List<DataSeries> dataSeries = new ArrayList<>();
     private SerieRepository repository;
-    List<Serie> seriesBDD = new ArrayList<>();
+    private Optional<Serie> seriesBDD;
+    private List<Serie> series = new ArrayList<>();
 
     public Principal(SerieRepository repository) {
         this.repository = repository;
@@ -38,7 +39,10 @@ public class Principal {
                     7 - Buscar série por categoria
                     8 - Buscar série pela quantidade 
                         de temporadas e pela avaliação
-                        
+                    9 - Buscar episódio por trecho
+                    10 - Buscar top 5 Episódios por série
+                    11 -  Buscar episódios por data
+                    
                     0 - Sair
                     """;
 
@@ -71,6 +75,15 @@ public class Principal {
                 case 8:
                     searchTemporadeAndAssessment();
                     break;
+                case 9:
+                    searchEpisodeSegment();
+                    break;
+                case 10:
+                    searchTop5EpisodeoPerSerie();
+                    break;
+                case 11:
+                    searchEpisodesPerDate();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -102,11 +115,11 @@ public class Principal {
         System.out.println("Choose the series you want to search for episodes");
         var nameSerie = reading.nextLine();
 
-        Optional<Serie> serie = repository.findByTitleContainingIgnoreCase(nameSerie);
+        seriesBDD = repository.findByTitleContainingIgnoreCase(nameSerie);
         ;
 
-        if (serie.isPresent()) {
-            var serieEncontrada = serie.get();
+        if (seriesBDD.isPresent()) {
+            var serieEncontrada = seriesBDD.get();
             List<Seasons> season = new ArrayList<>();
 
             for (int i = 1; i <= serieEncontrada.getTotalSeasons(); i++) {
@@ -130,8 +143,8 @@ public class Principal {
     }
 
     private void listSearchedSeries() {
-        seriesBDD = repository.findAll();
-        seriesBDD.stream()
+        series = repository.findAll();
+        series.stream()
                 .sorted(Comparator.comparing(Serie::getGenre))
                 .forEach(System.out::println);
     }
@@ -139,10 +152,10 @@ public class Principal {
     private void searchSerieForTitle() {
         System.out.println("Enter the name of the series to search");
         var nameSerie = reading.nextLine();
-        Optional<Serie> serieSearch = repository.findByTitleContainingIgnoreCase(nameSerie);
+        seriesBDD = repository.findByTitleContainingIgnoreCase(nameSerie);
 
-        if (serieSearch.isPresent()) {
-            System.out.println("Series data: " + serieSearch.get());
+        if (seriesBDD.isPresent()) {
+            System.out.println("Series data: " + seriesBDD.get());
         } else {
             System.out.println("Series not found");
         }
@@ -198,5 +211,45 @@ public class Principal {
 
         seriesSearched.forEach(s -> System.out.println(s.getTitle() + " {assessment: " +
                 s.getAssessment() + "}"));
+    }
+
+    private void searchEpisodeSegment()
+    {
+        System.out.println("Type the excerpt you want to find the corresponding episode");
+        var excerpt = reading.nextLine();
+        List<Episodes> episodesSearched = repository.EpisodesPerExcerpt(excerpt);
+
+        episodesSearched.forEach
+                (e -> System.out.println(e.getSerie().getTitle() + " {"+ e.getTitle() +"}"));
+
+    }
+
+    private void searchTop5EpisodeoPerSerie()
+    {
+        searchSerieForTitle();
+        if(seriesBDD.isPresent())
+        {
+            Serie serie = seriesBDD.get();
+            List<Episodes> topEpisodes = repository.Top5EpisodesPerSerie(serie);
+
+            topEpisodes.forEach(e -> System.out.println
+                    (e.getSerie().getTitle() + " {"+e.getTitle()+" "+ e.getAssessement()+"}"));
+        }
+    }
+
+    private void searchEpisodesPerDate()
+    {
+        searchSerieForTitle();
+        if(seriesBDD.isPresent())
+        {
+            Serie serie = seriesBDD.get();
+
+            System.out.println("Enter the launch year: ");
+            var dateYear = reading.nextInt();
+            reading.nextLine();
+
+            List<Episodes> episodesYear = repository.EpisodesPerSerieYear(serie, dateYear);
+            episodesYear.forEach(System.out::println);
+        }
     }
 }
