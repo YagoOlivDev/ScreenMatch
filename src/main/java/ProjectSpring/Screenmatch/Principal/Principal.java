@@ -93,7 +93,8 @@ public class Principal {
         }
     }
 
-    private void searchSerieWeb() {
+    private void searchSerieWeb()
+    {
         DataSeries dataSeries = getSeries();
         Serie serie = new Serie(dataSeries);
         repository.save(serie);
