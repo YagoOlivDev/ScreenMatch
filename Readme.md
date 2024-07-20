@@ -28,7 +28,7 @@ O Screenmatch é uma aplicação que oferece uma interface amigável para os usu
 
 - [x] APIs em funcionamento
 - [x] Integração com banco de dados
-- [ ]  Finazalização do Back-End
+- [x]  Finazalização do Back-End
 - [ ] Front-End
 
 ## Tecnologias Utilizadas
